@@ -1,0 +1,6 @@
+{
+  "ConnectionStrings": {
+    "ShopBridgeDB": "Server=CDC2-L-01346MW;Database=ShopBridge;Trusted_Connection=True;connect timeout=10"
+
+  }
+}
