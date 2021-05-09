@@ -96,23 +96,30 @@ namespace Shopbridge.Repository
             try
             {
                 var item = dbcontext.StockInfos.Where(x => x.StockId == stockrequest.StockId).FirstOrDefault();
-                if (!String.IsNullOrEmpty(stockrequest.Name))
-                    item.Name = stockrequest.Name;
-                if (!String.IsNullOrEmpty(stockrequest.Description))
-                    item.Description = stockrequest.Description;
-                if (stockrequest.Price != null)
-                    item.Price = stockrequest.Price;
-                if (String.IsNullOrEmpty(stockrequest.ProductType))
-                    item.ProductType = stockrequest.ProductType;
-                if (String.IsNullOrEmpty(stockrequest.AvailabilityStatus))
-                    item.AvailabilityStatus = stockrequest.AvailabilityStatus;
-                if (stockrequest.Rating != null)
-                    item.Rating = stockrequest.Rating;
-                var val = dbcontext.SaveChanges();
-                if (val == 1)
-                    response = GlobalConstants.Success;
+                if (item != null)
+                {
+                    if (!String.IsNullOrEmpty(stockrequest.Name))
+                        item.Name = stockrequest.Name;
+                    if (!String.IsNullOrEmpty(stockrequest.Description))
+                        item.Description = stockrequest.Description;
+                    if (stockrequest.Price != null)
+                        item.Price = stockrequest.Price;
+                    if (String.IsNullOrEmpty(stockrequest.ProductType))
+                        item.ProductType = stockrequest.ProductType;
+                    if (String.IsNullOrEmpty(stockrequest.AvailabilityStatus))
+                        item.AvailabilityStatus = stockrequest.AvailabilityStatus;
+                    if (stockrequest.Rating != null)
+                        item.Rating = stockrequest.Rating;
+                    var val = dbcontext.SaveChanges();
+                    if (val == 1)
+                        response = GlobalConstants.Success;
+                    else
+                        response = GlobalConstants.Failure;
+                }
                 else
-                    response = GlobalConstants.Failure;
+                {
+                    response = "Invalid Stock Id";
+                }
             }
             catch (Exception ex)
             {

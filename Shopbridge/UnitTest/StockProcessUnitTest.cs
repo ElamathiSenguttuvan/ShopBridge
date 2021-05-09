@@ -26,22 +26,10 @@ namespace Shopbridge.UnitTest
         public StockProcessUnitTest()
         {
             optionsBuilder = new DbContextOptionsBuilder<ShopBridgeContext>();
-            optionsBuilder.UseSqlServer(Configuration.GetConnectionString("ShopBridgeDB"));
+            optionsBuilder.UseSqlServer("Server=CDC2-L-01346MW;Database=ShopBridge;Trusted_Connection=True;connect timeout=10");
             dbctxt = new ShopBridgeContext(optionsBuilder.Options);
         }
-        public IConfiguration Configuration
-        {
-            get
-            {
-                if (_config == null)
-                {
-                    var builder = new ConfigurationBuilder().AddJsonFile($"TestSettings.json", optional: false);
-                    _config = builder.Build();
-                }
-                return _config;
-            }
 
-        }
         public static void Main()
         {
 
@@ -59,7 +47,7 @@ namespace Shopbridge.UnitTest
             StockProcessRepository repo = new StockProcessRepository(dbctxt);
 
             StockInfo info = new StockInfo();
-            info.StockId = 11;
+            info.StockId = 21;
             info.Name = "JBL GO2 Speaker";
             info.Price = 2166.00M;
             info.ProductType = "Electronics";
@@ -74,7 +62,7 @@ namespace Shopbridge.UnitTest
             StockProcessRepository repo = new StockProcessRepository(dbctxt);
 
             StockInfo info = new StockInfo();
-            info.StockId = 3;
+            info.StockId = 7;
             info.Name = "JBL GO2 Speaker";
             info.Price = 2166.00M;
             info.ProductType = "Electronics";
@@ -88,7 +76,7 @@ namespace Shopbridge.UnitTest
         {
             StockProcessRepository repo = new StockProcessRepository(dbctxt);
 
-            int id =4;
+            int id =21;
             string result = repo.RemoveStockItem(id).Result;
             Assert.Equal(result, GlobalConstants.Success);
         }
@@ -107,12 +95,12 @@ namespace Shopbridge.UnitTest
             StockProcessRepository repo = new StockProcessRepository(dbctxt);
 
             StockInfo info = new StockInfo();
-            info.StockId = 11;
+            info.StockId = 7;
             info.Name = "JBL GO2 Speaker";
             info.Price = 2166.00M;
             info.ProductType = "Electronics";
-            info.Rating = 3.3;
-            info.AvailabilityStatus = "Yes";
+            info.Rating = 3.4;
+            info.AvailabilityStatus = "No";
             string result = repo.UpdateStockItem(info).Result;
             Assert.Equal(result, GlobalConstants.Success);
         }
@@ -122,11 +110,11 @@ namespace Shopbridge.UnitTest
             StockProcessRepository repo = new StockProcessRepository(dbctxt);
 
             StockInfo info = new StockInfo();
-            info.StockId = 11;
+            info.StockId = 21;
             info.Name = "JBL GO2 Speaker";
             info.Price = 2166.00M;
             info.ProductType = "Electronics";
-            info.Rating = 3.2;
+            info.Rating =4;
             info.AvailabilityStatus = "Yes";
             string result = repo.UpdateStockItem(info).Result;
             Assert.Equal(result, GlobalConstants.Failure);
